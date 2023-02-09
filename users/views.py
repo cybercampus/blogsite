@@ -1,7 +1,21 @@
 #users/views.py
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
+
 from .forms import LoginForm, RegisterForm
+
+# 邮箱登陆注册
+class MyBacked(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs ):   #重载authenticate
+        try:
+            user = User.objects.get(Q(username=username)|Q(email=username))
+            if user.check_password(password):   #加密明文密码
+                return user
+        except Exception as e:
+            return None
 
 def login_view(request):
     if request.method != 'POST':  #判断请求方式
@@ -34,6 +48,7 @@ def register(request):
         if form.is_valid():
             new_user = form.save(commit = False)
             new_user.set_password(form.cleaned_data.get('password'))
+            new_user.username = form.cleaned_data.get('email')
             new_user.save()
             return HttpResponse('注册成功')
 

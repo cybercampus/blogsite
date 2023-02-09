@@ -21,8 +21,8 @@ class LoginForm(forms.Form):
 
 # 使用 Django 提供的 ModelForm 实现注册页面
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(label='用户名', max_length=32, widget=forms.TextInput(attrs={
-        'class':'input', 'placeholder':'用户名'
+    email = forms.CharField(label='邮箱', max_length=32, widget=forms.EmailInput(attrs={
+        'class':'input', 'placeholder':'邮箱'
     }))
     password = forms.CharField(label='密码', max_length=6, widget=forms.PasswordInput(attrs={
         'class':'input', 'placeholder':'密码'
@@ -33,15 +33,15 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password')    #设置允许被编辑的字段名称
+        fields = ('email', 'password')    #设置允许被编辑的字段名称
 
     '''验证用户名是否已存在'''
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        exists = User.objects.filter(username=username)
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        exists = User.objects.filter(email=email)
         if exists:
-            raise forms.ValidationError('用户名已存在！')
-        return username
+            raise forms.ValidationError('邮箱已存在！')
+        return email
 
     def clean_password1(self):
         """验证密码是否一致"""
