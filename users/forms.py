@@ -50,3 +50,15 @@ class RegisterForm(forms.ModelForm):
         if password != password1:
             raise forms.ValidationError('密码不一直！')
         return self.cleaned_data.get('password1')
+
+#填写email表单页面
+class ForgetPwdForm(forms.Form):
+    email = forms.EmailField(label="请输入注册邮箱地址", min_length=4,widget=forms.EmailInput(attrs={
+        'class':'input', 'placeholder': '用户名/邮箱'
+    }))
+
+#修改密码表单
+class ModifyPwdForm(forms.Form):
+    email = forms.CharField(label="请输入新密码", min_length=6,widget=forms.PasswordInput(attrs={
+        'class':'input', 'placeholder': '输入密码'
+    }))

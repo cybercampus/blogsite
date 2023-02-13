@@ -19,7 +19,15 @@ def send_register_mail(email, send_type="register"):
 
     if send_type == 'register':
         title = '博客注册激活链接'
-        body = '请点击一下链接激活账号: htto://127.0.0.1:8000/users/active/{0}'.format(code)
+        body = '请点击一下链接激活账号: http://127.0.0.1:8000/users/active/{0}'.format(code)
+
+        send_status = send_mail(title,body,'309415794@qq.com',[email])
+        if send_status:
+            pass
+    
+    elif send_type == 'forget':
+        title = '找回密码链接'
+        body = '请点击一下链接修改密码: http://127.0.0.1:8000/users/forget_pwd_url/{0}'.format(code)
 
         send_status = send_mail(title,body,'309415794@qq.com',[email])
         if send_status:

@@ -142,4 +142,4 @@ EMAIL_HOST_PASSWORD = 'xxxxx'
 EMAIL_PORT = 456
 EMAIL_USE_SSL = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'   #控制是否运行终端发送邮件，部署服务器时，删除此行
