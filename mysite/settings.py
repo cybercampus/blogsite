@@ -134,3 +134,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#发邮件相关参数
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_USER = '123@qq.com'
+EMAIL_HOST_PASSWORD = 'xxxxx'
+EMAIL_PORT = 456
+EMAIL_USE_SSL = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

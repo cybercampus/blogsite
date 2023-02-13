@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),   # 使用 include() 引入 user.urls 文件
+    
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # 配置静态文件 url
 

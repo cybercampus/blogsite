@@ -6,6 +6,8 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 
 from .forms import LoginForm, RegisterForm
+from .models import EmailVerifyRecord
+from utils.email_send import send_register_mail
 
 # 邮箱登陆注册
 class MyBacked(ModelBackend):
@@ -16,6 +18,19 @@ class MyBacked(ModelBackend):
                 return user
         except Exception as e:
             return None
+
+#修改用户状态，对比验证码
+def active_user(request,active_code):
+    all_records = EmailVerifyRecord.objects.filter(code=active_code)
+    if all_records:
+        for record in all_records:
+            email = record.email
+            user = User.objects.get(email=email)
+            user.is_staff = True
+            user.save()
+        else:
+            return HttpResponse('连接有误！')
+        return redirect('users:login')
 
 def login_view(request):
     if request.method != 'POST':  #判断请求方式
@@ -50,7 +65,9 @@ def register(request):
             new_user.set_password(form.cleaned_data.get('password'))
             new_user.username = form.cleaned_data.get('email')
             new_user.save()
+
+            send_register_mail(form.cleaned_data.get('email'),'register')
             return HttpResponse('注册成功')
 
     context = {'form': form}
-    return render(request, 'users/register.html',context)  
+    return render(request, 'users/register.html',context)   
