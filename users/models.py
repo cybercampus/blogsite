@@ -8,9 +8,11 @@ class UserProfile(models.Model):
         ('female','女'),
     }
     owner = models.OneToOneField(User,on_delete=models.CASCADE,verbose_name='用户')
-    nake_name = models.CharField('昵称',max_length=25,blank=True,default='')
+    nick_name = models.CharField('昵称',max_length=25,blank=True,default='')
+    desc = models.TextField('个人简介',max_length=225,blank=True,default='')
+    gexing = models.CharField('个性签名',max_length=125,blank=True,default='')
     birthday = models.DateField('生日',null=True,blank=True)
-    gender = models.CharField('性别',max_length=6,choices= USER_GENDER_TYPE,default='male')
+    gender = models.CharField('性别', max_length=6, choices= USER_GENDER_TYPE, default='male')
     address = models.CharField('地址',max_length=100,blank=True,default='')
     image = models.ImageField(upload_to='images/%Y/%m',default='images/profile.png',max_length=100,verbose_name='用户图像')
 
