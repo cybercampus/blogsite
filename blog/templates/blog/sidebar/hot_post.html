@@ -1,0 +1,7 @@
+{% load blog_category %}
+{% get_hot_pv_post as post_list %}
+{% for post in post_list %}
+    <ui>
+        <li><a class="" href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></li>
+    </ui>
+{% endfor %}

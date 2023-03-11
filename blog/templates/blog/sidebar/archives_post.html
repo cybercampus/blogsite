@@ -1,0 +1,7 @@
+{% load blog_category %}
+{% get_archives as archives_list %}
+{% for archive in archives_list %}
+<ui>
+    <li><a class="" href="{% url 'blog:archives' archive.year archive.month %}">{{ archive }}</a></li>
+</ui>
+{% endfor %}

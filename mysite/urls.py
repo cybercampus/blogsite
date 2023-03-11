@@ -17,13 +17,18 @@ from django.contrib import admin
 from django.urls import include, path   #引入 include() 方法
 from django.conf import settings
 from django.conf.urls.static import static
+from utils.upload import upload_file
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),   # 使用 include() 引入 user.urls 文件
-    
+    path('',include('blog.urls')),
+    path('uploads/',upload_file,name='uploads')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # 配置静态文件 url
 
 # 配置用户上传文件 url
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.site_header = '博客的管理后台'
+admin.site.index_title = '博客管理后台'
